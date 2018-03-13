@@ -10,16 +10,14 @@ using namespace std;
 
 void pre_test_main(configuration & config, directedgraph G)
 {
-	
-	pre_test_result results = Pre_Test(G, config.cyclelength, config.chainlength, config.max_test, config.nr_scenarios, config.time_limit, config.scen_gen, config.failure_type, config);
+	vector<directedgraph> my_scenar;
+	pre_test_result results = Pre_Test(G, config.cyclelength, config.chainlength, config.max_test, config.nr_scenarios, config.time_limit, config.scen_gen, config.failure_type, config, my_scenar);
 	Output_Pre_Test(results, config);
 }
 
-pre_test_result Pre_Test(directedgraph G, int chainlength, int cyclelength, int max_tests, int nr_scen, int time_limit, int scenario_generator, int failure_type, const configuration & config)
+pre_test_result Pre_Test(directedgraph G, int chainlength, int cyclelength, int max_tests, int nr_scen, int time_limit, int scenario_generator, int failure_type, const configuration & config, const vector<directedgraph> & my_scenar)
 {
 	directedgraph Tested_Graph = G;
-
-	
 
 	vector<directedgraph> Scenarios;
 	if (failure_type == 1)
@@ -33,20 +31,34 @@ pre_test_result Pre_Test(directedgraph G, int chainlength, int cyclelength, int 
 		{
 			Scenarios = Generate_Scenarios(G, nr_scen); cout << "Basic Scen Generator" << endl;
 		}
-			
+
 	}
 	else if (failure_type == 2)
 	{
 		cout << "Vertices Fail" << endl;
-		Scenarios = Generate_Scenarios_Vertex_Tight(G, nr_scen);
+		Scenarios = Generate_Scenarios_Vertex_Tight_Valentin(G, nr_scen);
 	}
-	cout << "Scenarios Generated" << endl;
-	cout << Scenarios.size();
+	else if (failure_type == 3) {
+		Scenarios = my_scenar;
+	}
 
-	
+	if (failure_type != 3) {
+		cout << "Scenarios Generated" << endl;
+		cout << Scenarios.size();
+		cout << "First computing UB" << endl;
+		float UB = 0;
+		for (unsigned int i = 0; i < Scenarios.size(); ++i)
+		{
+			vector<directedgraph> scenar_ith (1, Scenarios[i]);
+			pre_test_result partial_ub = Pre_Test(G, config.cyclelength, config.chainlength, config.max_test, 1, config.time_limit, config.scen_gen, 3, config, scenar_ith);
+			UB += partial_ub.objective_value;
+		}
+		cout << endl << endl << "UPPER BOUND : " << UB/Scenarios.size() << endl << endl;
+	}
+
 	time_t start_time;
 	time(&start_time);
-	IloEnv env; 
+	IloEnv env;
 	IloModel model(env);
 	cout << "Generating Variables" << endl;
 	vector<vector<vector<IloNumVarArray>>> Cyclevar(nr_scen); // First position is scenario, second index is the Graph Copy, third the position in the Graph, fourth the individual arcs.
@@ -135,7 +147,7 @@ pre_test_result Pre_Test(directedgraph G, int chainlength, int cyclelength, int 
 		}
 	}
 
-	
+
 	return results;
 }
 
@@ -143,7 +155,7 @@ vector<directedgraph> Generate_Scenarios(const directedgraph & G, int nr_scen)
 {
 	//ofstream output;
 	//output.open("Scenarios.txt");
-	
+
 	srand(time(NULL));
 
 	vector<directedgraph> Scenarios;
@@ -256,6 +268,72 @@ vector<directedgraph> Generate_Scenarios_Vertex_Tight(const directedgraph & G, i
 	return Scenarios;
 }
 
+vector<directedgraph> Generate_Scenarios_Vertex_Tight_Valentin(const directedgraph & G, int nr_scen)
+{
+	ofstream output;
+	stringstream output_name;
+	srand(time(NULL));
+	vector<directedgraph> Scenarios(nr_scen);
+	// Get the number of successes for each vertex and the number of scenarios.
+	vector<int> succes_per_vertex(G.size);
+	for (int i = 0; i < G.nr_pairs; i++)
+	{
+		float expected_succes = nr_scen*(1 - G.pairs[i].failprob);
+		float natural;
+		float remainder = modf(expected_succes, &natural);
+		// Round it to an integer probabilistically.
+		if (rand() % 1000 > remainder * 1000)
+			remainder = 1;
+		else
+			remainder = 0;
+		succes_per_vertex[i] = natural + remainder;
+	}
+	for (int i = G.nr_pairs; i < G.size; i++)
+	{
+		float expected_succes = nr_scen*(1 - G.ndds[i].failprob);
+		float natural;
+		float remainder = modf(expected_succes, &natural);
+		// Round it to an integer probabilistically.
+		if (rand() % 1000 > remainder * 1000)
+			remainder = 1;
+		else
+			remainder = 0;
+		succes_per_vertex[i] = natural + remainder;
+	}
+	for (int i = 0; i < nr_scen; i++)
+	{
+		ofstream output_scenar;
+		Scenarios[i] = G;
+		Scenarios[i].arcs.resize(0); // Empty out the arcs.
+		output_name.str(string());
+		output_name << "Scenario_" << i << ".txt";
+		cout << "OPENING SCENARIO " << i << endl;
+		output_scenar.open(output_name.str());
+		output_scenar << "Nr_Pairs = " << Scenarios[i].nr_pairs << endl;
+		output_scenar << "Nr_NDD = " << Scenarios[i].nr_ndd << endl;
+		vector<bool> vertex_succes(G.size);
+		for (int j = 0; j < G.size; j++)
+		{
+			if (rand() % 1000 < (1 - G.pairs[j].failprob)*1000)
+			{
+				succes_per_vertex[j]--;
+				vertex_succes[j] = 1;
+			}
+		}
+
+		for (int j = 0; j < G.arcs.size(); j++)
+		{
+			if (vertex_succes[G.arcs[j].startvertex] == 1 && vertex_succes[G.arcs[j].endvertex] == 1)
+			{
+				Scenarios[i].arcs.push_back(G.arcs[j]);
+				output_scenar << "(" << G.arcs[j].startvertex << "," << G.arcs[j].endvertex << "), " << G.arcs[j].failprob << ", " << G.arcs[j].weight << endl;
+			}
+		}
+	}
+
+	return Scenarios;
+}
+
 cycle_variables Generate_Cycle_Var(IloEnv &env, const directedgraph & G, int cyclelength, int nr_scen)
 {
 	// Note that we consistently work with nr_pairs - 1. Since the copy corresponding to the last pair is empty (no arcs), it is useless to include it.
@@ -347,7 +425,7 @@ IloNumVarArray Generate_Testvar(IloEnv & env, directedgraph G)
 		const char* vname = varname.c_str();
 		Testvar.add(IloNumVar(env, 0, 1, ILOINT, vname));
 	}
-	
+
 	return Testvar;
 }
 
@@ -387,7 +465,7 @@ vector<IloRangeArray> Build_Test_Constraint(IloEnv & env, IloModel model, direct
 		}
 		model.add(Test_Constraints[scen]);
 	}
-	
+
 	return Test_Constraints;
 }
 

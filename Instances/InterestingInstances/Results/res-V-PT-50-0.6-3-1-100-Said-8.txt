@@ -1,0 +1,60 @@
+Reading graph from file
+Choosing Solver: Expected Transplants
+Reading graph from file
+Reading graph from file
+Graph Read
+Model Built
+Model Solved, Branching starting
+Model Built
+Model Solved, Branching starting
+Model Built
+Model Solved, Branching starting
+Model Built
+Model Solved, Branching starting
+Model Built
+Model Solved, Branching starting
+Model Built
+Model Solved, Branching starting
+Model Built
+Model Solved, Branching starting
+Model Built
+Model Solved, Branching starting
+Model Built
+Model Solved, Branching starting
+Model Built
+Model Solved, Branching starting
+Model Built
+Model Solved, Branching starting
+Model Built
+Model Solved, Branching starting
+Model Built
+Model Solved, Branching starting
+
+Total time for post ex evaluation : 2572.29
+SCC 0 weight = 4.49105
+SCC 1 weight = 0.512
+SCC 2 weight = 1.56641
+SCC 3 weight = 0.6912
+SCC 4 weight = 0.512
+Reading graph from file
+Choosing Solver: Expected Transplants
+Reading graph from file
+Reading graph from file
+Graph Read
+Model Built
+Model Solved, Branching starting
+Model Built
+Model Solved, Branching starting
+Model Built
+Model Solved, Branching starting
+Model Built
+Model Solved, Branching starting
+Model Built
+Model Solved, Branching starting
+
+Solution file : V-PT-50-0.6-3-1-100-Said-8.txt PSE time OLD : 5590.82
+SSC 0 weight = 4.49105
+SSC 1 weight = 0.512
+SSC 2 weight = 1.56641
+SSC 3 weight = 0.6912
+SSC 4 weight = 0.512

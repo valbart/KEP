@@ -24,20 +24,21 @@ float Exact_Expected_Transplants(configuration & config)
 		G_test.ndds = G_orig.ndds;
 	}
 	cout << "Graph Read" << endl;
-	vector<cycle_arcs> SCC = Split_SCC(G_test);
-	vector<cycle_arcs> SCC_T = Split_SCC_Tarjan(G_test);
+	vector<bool> fixed_to_zero (G_test.nr_pairs, 0);
+	vector<bool> fixed (G_test.nr_pairs, 0);
+	vector<cycle_arcs> SCC_T = Split_SCC_Tarjan(G_test, fixed_to_zero);
 	if (config.failure_type == 1)
 	{
-		Subset_Set_Weights_Arc_verbose(SCC, G_test, config);
+		Subset_Set_Weights_Arc_verbose(SCC_T, G_test, config);
 	}
 	else if (config.failure_type == 2)
 	{
-		Subset_Set_Weights_Vertex_Verbose(SCC_T, G_test, config);
+		Subset_Set_Weights_Vertex_Verbose(SCC_T, G_test, config, fixed);
 	}
 	float total_weight = 0;
 	for (int i = 0; i < SCC_T.size(); i++)
 	{
-		cout << "SSC " << i << " weight = " << SCC_T[i].weight << endl;
+		cout << "SCC " << i << " weight = " << SCC_T[i].weight << endl;
 		total_weight = total_weight + SCC_T[i].weight;
 	}
 	ofstream output;
@@ -71,7 +72,8 @@ float Scenarios_Expected_Transpants(configuration & config)
 	else if (config.failure_type == 2)
 	{
 		cout << "Vertices Fail" << endl;
-		Scenarios = Generate_Scenarios_Vertex_Tight(G, config.nr_scenarios);
+		//Scenarios = Generate_Scenarios_Vertex_Tight(G, config.nr_scenarios);
+		Scenarios = Generate_Scenarios_Vertex_Tight_Valentin(G, config.nr_scenarios);
 	}
 
 	// Re-number the arcs, or things break in the HPIEF function. We do save the correct arcnumbers to relate results to the arcs in G.
@@ -82,7 +84,7 @@ float Scenarios_Expected_Transpants(configuration & config)
 			Scenarios[i].arcs[j].arcnumber = j;
 		}
 	}
-	
+
 	int total_transplant = 0;
 	for(int i = 0; i < config.nr_scenarios; i++)
 	{
@@ -160,52 +162,67 @@ vector<cycle_arcs> Split_SCC(const directedgraph & tested_G)
 				}
 				cout << endl;
 			}
-				
+
 		}
 	}
 
 	return SCC;
 }
 
-vector<list<int>> G_Adjacency(const directedgraph & tested_G) {
+vector<list<int>> G_Adjacency(const directedgraph & tested_G, const vector<bool> & fixed_to_zero) {
 	// We keep track of the arcs linked to v and not exactly vertices as we need the
 	// index of the arcs to build the SCCs later on. Furthemore the endvertex can be easily
 	// gathered through test_G
 	vector<list<int>> adj (tested_G.nr_pairs);
+	int sv, ev;
 	for (unsigned int i = 0; i < tested_G.arcs.size(); ++i) {
-		adj[tested_G.arcs[i].startvertex].push_back(i);
+		sv = tested_G.arcs[i].startvertex;
+		ev = tested_G.arcs[i].endvertex;
+		if (fixed_to_zero[sv] == 0 && fixed_to_zero[ev] == 0) adj[sv].push_back(i);
 	}
 	return adj;
 }
 
-vector<cycle_arcs> Split_SCC_Tarjan(const directedgraph & tested_G) {
-	cout << "Computing SCCs using Tarjan algorithm: " << endl;
+vector<cycle_arcs> Split_SCC_Tarjan(const directedgraph & tested_G, const vector<bool> & fixed_to_zero) {
 	vector<cycle_arcs> SCC;
 	int index = 0;
 	vector<int> vertices_index (tested_G.nr_pairs, -1); // -1 means the index of the vertex is undefined.
 	vector<int> low_link (tested_G.nr_pairs, -1);
 	vector<bool> on_stack(tested_G.nr_pairs, 0);
-	vector<list<int>> adj = G_Adjacency(tested_G);
+	vector<list<int>> adj = G_Adjacency(tested_G, fixed_to_zero);
 	deque<int> Q;
-	deque<int> arcs;
 	vector<vector<int>> SCC_arcs(tested_G.nr_pairs);
 	for (unsigned int v = 0; v < tested_G.nr_pairs; ++v) {
-		if (vertices_index[v] == -1) Find_SCC_Root(tested_G, adj, v, index, vertices_index, Q, arcs, low_link, on_stack, SCC, SCC_arcs);
+		if (vertices_index[v] == -1) Find_SCC_Root(tested_G, adj, v, index, vertices_index, Q, low_link, on_stack, SCC, SCC_arcs);
 	}
-	for (unsigned int i = 0; i < tested_G.nr_pairs; ++i) cout << i << ":" << vertices_index[i] << "  ";
-	cout << endl;
-	cout << "Roots are :";
-	for (unsigned int i = 0; i < tested_G.nr_pairs; ++i) {
-		if (vertices_index[i] == low_link[i]) cout << i << "  ";
-	}
-	cout << endl;
-	for (unsigned int i = 0; i < tested_G.nr_pairs; ++i) cout << i << ":" << low_link[i] << "  ";
-	cout << endl;
 	return SCC;
 }
 
-void Find_SCC_Root(const directedgraph & tested_G, const vector<list<int>> & adj, int v, int & index, vector<int> & vertices_index, 
-				   deque<int> & Q, deque<int> & arcs, vector<int> & low_link, vector<bool> & on_stack, vector<cycle_arcs> & SCC, vector<vector<int>> & SCC_arcs) {
+vector<tuple<int,int,float>> Find_Articulation_Points(const directedgraph & G) {
+	vector<tuple<int, int, float>> articulation_points;
+	vector<bool> fixed_to_zero;
+	vector<cycle_arcs> SCC;
+	float score;
+	int max_SCC;
+	for (unsigned int i = 0; i < G.nr_pairs; ++i) {
+		score = 1;
+		fixed_to_zero = vector<bool>(G.nr_pairs, 0);
+		fixed_to_zero[i] = 1;
+		SCC = Split_SCC_Tarjan(G, fixed_to_zero);
+		if (SCC.size() > 1) {
+			max_SCC = SCC[0].vertices.size();
+			for (unsigned int j = 0; j < SCC.size(); j++) {
+				if (SCC[j].vertices.size() > max_SCC) max_SCC = SCC[j].vertices.size();
+			}
+			articulation_points.push_back(tuple<int, int, float>(i, SCC.size(), max_SCC));
+		}
+	}
+	return articulation_points;
+}
+
+
+void Find_SCC_Root(const directedgraph & tested_G, const vector<list<int>> & adj, int v, int & index, vector<int> & vertices_index,
+				   deque<int> & Q, vector<int> & low_link, vector<bool> & on_stack, vector<cycle_arcs> & SCC, vector<vector<int>> & SCC_arcs) {
 	vertices_index[v] = index;
 	low_link[v] = index;
 	index++;
@@ -215,10 +232,9 @@ void Find_SCC_Root(const directedgraph & tested_G, const vector<list<int>> & adj
 		int w = tested_G.arcs[*it].endvertex;
 		if (vertices_index[w] == -1) {
 			// (*it) has not been visited yet, explore it to find its low link
-			Find_SCC_Root(tested_G, adj, w, index, vertices_index, Q, arcs, low_link, on_stack, SCC, SCC_arcs);
+			Find_SCC_Root(tested_G, adj, w, index, vertices_index, Q, low_link, on_stack, SCC, SCC_arcs);
 			low_link[v] = min(low_link[v], low_link[w]);
 			if (on_stack[w]) {
-				arcs.push_front(*it);
 				SCC_arcs[v].push_back(*it);
 			}
 		}
@@ -226,14 +242,12 @@ void Find_SCC_Root(const directedgraph & tested_G, const vector<list<int>> & adj
 			// (*it) has been visited and is still on the stack, hence belongs to the same SCC
 			// either rooted in *it (min = index[*it]) or by a vertex above in the DFS tree (min = low_link[v])
 			low_link[v] = min(low_link[v], vertices_index[w]);
-			arcs.push_front(*it);
 			SCC_arcs[v].push_back(*it);
 		}
 	}
 
 	// Then we pop the vertices to build the SCC
 	int w = -1;
-	int cur_arc = arcs.front();
 	if (low_link[v] == vertices_index[v]) {
 		cycle_arcs new_SCC;
 		do {
@@ -241,27 +255,14 @@ void Find_SCC_Root(const directedgraph & tested_G, const vector<list<int>> & adj
 			w = Q.front();
 			Q.pop_front();
 			on_stack[w] = 0;
-			new_SCC.vertices.push_back(w);		
+			new_SCC.vertices.push_back(w);
 		} while(w != v);
-		
-		//while (!arcs.empty() && low_link[tested_G.arcs[cur_arc].startvertex] >= vertices_index[v]) {
-		/*	while (!arcs.empty()) {
-			new_SCC.arcs.push_back(arcs.front());
-			arcs.pop_front();
-			//cur_arc = arcs.front();
-		}*/
-		// If we stopped and the arcs queue is not empty we encountered a cross arcs and we have to delete it
-		if (!arcs.empty()) arcs.pop_front();
-		if (new_SCC.vertices.size() > 1) { 
+
+		if (new_SCC.vertices.size() > 1) {
 			for (int j = 0; j < new_SCC.vertices.size(); j++) {
-				cout << new_SCC.vertices[j] << "\t";
+				// We concatenate the list of arcs that belongs to the current SCC together
 				new_SCC.arcs.insert(new_SCC.arcs.end(), SCC_arcs[new_SCC.vertices[j]].begin(), SCC_arcs[new_SCC.vertices[j]].end());
 			}
-			cout << endl;
-			for (int j = 0; j < new_SCC.arcs.size(); j++) {
-				cout << "(" << tested_G.arcs[new_SCC.arcs[j]].startvertex << "," << tested_G.arcs[new_SCC.arcs[j]].endvertex << ")" << endl;
-			}
-			cout << endl;
 			SCC.push_back(new_SCC);
 		}
 	}

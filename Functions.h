@@ -18,7 +18,7 @@ directedgraph readgraph2(configuration & config, string filename);
 void Choose_Solver(configuration & config, directedgraph & G);
 void pre_test_main(configuration & config, directedgraph G);
 void Subset_Recourse(configuration & config, directedgraph G);
-pre_test_result Pre_Test(directedgraph G, int chainlength, int cyclelength, int max_tests, int nr_scen, int time_limit, int scen_gen, int failure_type, const configuration & config); // Pre_test outputs a new graph, using only the arcs chosen in the optimization.
+pre_test_result Pre_Test(directedgraph G, int chainlength, int cyclelength, int max_tests, int nr_scen, int time_limit, int scen_gen, int failure_type, const configuration & config, const vector<directedgraph> & my_scenar); // Pre_test outputs a new graph, using only the arcs chosen in the optimization.
 matching_result Hybrid_PIEF(directedgraph G, int chainlength, int cyclength, configuration & config);
 matching_result PICEF(directedgraph G, configuration & config);
 
@@ -27,6 +27,7 @@ matching_result PICEF(directedgraph G, configuration & config);
 vector<directedgraph> Generate_Scenarios(const directedgraph &G, int nr_scen);
 vector<directedgraph> Generate_Scenarios_Tight(const directedgraph & G, int nr_scen);
 vector<directedgraph> Generate_Scenarios_Vertex_Tight(const directedgraph & G, int nr_scen);
+vector<directedgraph> Generate_Scenarios_Vertex_Tight_Valentin(const directedgraph & G, int nr_scen);
 cycle_variables Generate_Cycle_Var(IloEnv &env, const directedgraph & G, int cyclelength, int nr_scen);
 chain_variables Generate_Chain_Var(IloEnv &env, directedgraph G, int chainlength, int nr_scen);
 IloNumVarArray Generate_Testvar(IloEnv &env, directedgraph G);
@@ -62,20 +63,22 @@ void Subset_Arcs(vector<cycle_arcs> & subsets, const directedgraph & G, const co
 void Subset_Set_Weights_Arc(vector<cycle_arcs> & subsets, const directedgraph & G, const configuration & config);
 void Subset_Set_Weights_Vertex(vector<cycle_arcs> & subsets, const directedgraph & G, const configuration & config);
 void Subset_Set_Weights_Arc_verbose(vector<cycle_arcs> & subsets, const directedgraph & G, const configuration & config);
-void Subset_Set_Weights_Vertex_Verbose(vector<cycle_arcs>& subsets, const directedgraph & G, const configuration & config);
+void Subset_Set_Weights_Vertex_Verbose(vector<cycle_arcs>& subsets, const directedgraph & G, const configuration & config, vector<bool> & fixed);
 float Subset_Set_Weights_Arc_Root(const directedgraph & G, const configuration & config);
 float Subset_Set_Weights_Vertex_Root(const directedgraph & G, const configuration & config);
 float Subset_Set_Weights_Arc_Root_verbose(const directedgraph & G, const configuration & config);
-float Subset_Set_Weights_Vertex_Root_Verbose(const directedgraph & G, const configuration & config);
+float Subset_Set_Weights_Vertex_Root_Verbose(const directedgraph & G, const configuration & config, vector<bool> & fixed);
 float Subset_Set_Weights_Arc_Recursion(IloEnv & env, const directedgraph & G, IloCplex & CPLEX, IloNumVarArray & arcvar, vector<bool> fixed, float Solution, vector<int> arc_solutions, bool succes_fix, int depth);
 float Subset_Set_Weights_Vertex_Recursion(IloEnv &env, const directedgraph & G, IloCplex & CPLEX, vector<int> vertex_use, IloRangeArray & vertex_con, vector<bool> fixed, float Solution, bool succes_fix, int depth);
 float Subset_Set_Weights_Arc_Recursion_verbose(IloEnv & env, const directedgraph & G, IloCplex & CPLEX, IloNumVarArray & arcvar, vector<bool> fixed, float Solution, vector<int> arc_solutions, bool succes_fix, int depth, deque<bool> & suc_fail);
 list<tuple<int,int>> recompute_order(const directedgraph & G, const vector<int> & vertex_use);
-float Subset_Set_Weights_Vertex_Recursion_Verbose(const configuration & config, IloEnv &env, const directedgraph & G, IloCplex & CPLEX, vector<int> vertex_use, IloRangeArray & vertex_con, vector<bool> fixed, float Solution, bool succes_fix, int depth, deque<int> & suc_fail, list<tuple<int,int>> branching_order, int & nbBranch);
+float Subset_Set_Weights_Vertex_Recursion_Verbose(const configuration & config, IloEnv &env, const directedgraph & G, IloCplex & CPLEX, vector<int> vertex_use, IloRangeArray & vertex_con, vector<bool> fixed, float Solution, bool succes_fix, int depth, deque<int> & suc_fail, list<tuple<int,int>> branching_order, vector<bool> & fixed_to_zero);
 void update_order(const directedgraph & G, list<tuple<int,int>> & branching_order, const vector<int> & vertex_use, const vector<int> & entering_vertices, const vector<bool> & fixed);
 bool tuple_compare(tuple<int, int> const & t1, tuple<int,int> const & t2);
+// The function below may be deleted as will not likely be used: it find all the cycles in the subgraph of G induced by the vertex vertex_use[i] == 1
 vector<cycle_arcs> Find_Cycles_Subgraph(directedgraph G, const configuration & config, const vector<int> & vertex_use);
 directedgraph Subset_Graph(const cycle_arcs & subsets, const directedgraph & G);
+directedgraph Subset_Graph_New(const cycle_arcs & subsets, const directedgraph & G, vector<bool> & new_fixed, vector<bool> & fixed);
 void Vertex_Combine(cycle_arcs & current, const cycle_arcs & candidate);
 bool Vertex_Subset_Dominate(const cycle_arcs & parent, const cycle_arcs & candidate);
 bool Vertex_Subset_Equal(const cycle_arcs & parent, const cycle_arcs & candidate);
@@ -104,10 +107,11 @@ IloRangeArray Build_Vertex_Constraint_PICEF(IloEnv & env, IloModel &model, direc
 // Testing Functions
 float Calc_Expected_Transplants(configuration & config);
 vector<cycle_arcs> Split_SCC(const directedgraph & Tested_G);
-vector<list<int>> G_Adjacency(const directedgraph & tested_G);
-vector<cycle_arcs> Split_SCC_Tarjan(const directedgraph & tested_G);
-void Find_SCC_Root(const directedgraph & tested_G, const vector<list<int>> & adj, int v, int & index, vector<int> & vertices_index, 
-				   deque<int> & Q, deque<int> & arcs, vector<int> & low_link, vector<bool> & on_stack, vector<cycle_arcs> & SCC, vector<vector<int>> & SCC_arcs);
+vector<list<int>> G_Adjacency(const directedgraph & tested_G, const vector<bool> & fixed_to_zero);
+vector<cycle_arcs> Split_SCC_Tarjan(const directedgraph & tested_G, const vector<bool> & fixed_to_zero);
+void Find_SCC_Root(const directedgraph & tested_G, const vector<list<int>> & adj, int v, int & index, vector<int> & vertices_index,
+				   deque<int> & Q, vector<int> & low_link, vector<bool> & on_stack, vector<cycle_arcs> & SCC, vector<vector<int>> & SCC_arcs);
+vector<tuple<int, int, float>> Find_Articulation_Points(const directedgraph & G);
 
 // Limited World Comparisons (There is a limited number of scenarios.)
 void Limited_World(configuration & config, const directedgraph & G);

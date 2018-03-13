@@ -1,0 +1,13 @@
+Nr_Pairs = 50
+Nr_NDD = 0
+
+Results Pre-Test
+Objective Value = 2.18
+Computation Time = 11
+Nr Scenarios = 50
+Nr Test = 66
+Results Subset Recourse
+Objective Value = 94
+Computation Time = 1.45917e+09
+Nr Scenarios = 50
+Nr Test = 66

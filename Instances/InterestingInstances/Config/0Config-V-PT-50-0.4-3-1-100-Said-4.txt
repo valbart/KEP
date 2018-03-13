@@ -1,0 +1,28 @@
+# Options for the KEP, length of allowed chains and cycles.
+Cyclelength = 3
+Chainlength = 3
+#Failure Type (1 = Arcs Fail, 2 = Vertices Fail)
+Failure Type = 2
+# Solver: 1 = Subset Recourse, 2 = Pre-Test, 3 = Unlimited Cycle, 4 = Matheuristics,  5 = Compute expected transplants for given solution (0 if you only want to generate a graph).
+Solver = 5
+# Expected Transplant Computation 1 = Exact (can take a long time), 2 = Scenario Based ('Scenarios' set the number used.)
+Expected Type = 1
+#Options for the Pre-Test.
+Max Test = 45
+Scenarios = 500
+#Options for the Subset Recourse
+# The Subset Recourse Size is the size of the subsets above the maximum cyclelength.
+Subset Recourse Size = 1
+# Input Type: 1 = Input File (Old Version), 2 = Input File (Extended), 3 = Simple Graph Generator, 4 = Saidman et al. Graph Generator.
+Input Type = 2
+Input File = V-50-0.4-Said-4.txt
+# Options for output of Pre-Test Reslts
+Testvar Output = Output.txt
+# File name to read in a previous solution.
+Solution Input File = V-PT-50-0.4-3-1-100-Said-4.txt
+# Time limit in seconds, by default it is 24 hours (86400 seconds)
+Time Limit = 7200
+# Memory Limit in Mb for Pre-Test Solver, by default, this is 8192 (8 GB). If less memory is available, the program will crash.
+Memory Limit = 2048
+#Limited World (0 = take all scenarios into account, 1 = generated scenarios are taken as all possible scenarios).
+Limited World = 0

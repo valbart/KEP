@@ -1,0 +1,14 @@
+Reading graph from file
+Choosing Solver: Expected Transplants
+Reading graph from file
+Reading graph from file
+Graph Read
+Model Built
+Model Solved, Branching starting
+srun: Job step aborted: Waiting up to 12 seconds for job step to finish.
+slurmstepd: error: *** STEP 793118.0 ON dr10 CANCELLED AT 2018-03-08T06:48:49 DUE TO TIME LIMIT ***
+slurmstepd: error: *** JOB 793118 ON dr10 CANCELLED AT 2018-03-08T06:48:49 DUE TO TIME LIMIT ***
+srun: got SIGCONT
+srun: forcing job termination
+srun: error: dr10: task 0: Terminated
+srun: Terminating job step 793118.0

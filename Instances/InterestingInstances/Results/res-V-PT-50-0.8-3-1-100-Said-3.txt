@@ -1,0 +1,15 @@
+Reading graph from file
+Choosing Solver: Expected Transplants
+Reading graph from file
+Reading graph from file
+Graph Read
+Vertex switch :24:0  15:1  29:2  23:3  36:4  49:5  8:6  44:7  41:8  11:9  5:10  14:11  28:12  47:13  45:14  39:15  38:16  12:17  34:18  33:19  43:20  32:21  16:22  20:23  22:24  7:25  37:26  3:27  30:28  17:29  1:30  
+Model Built
+Model Solved, Branching starting
+slurmstepd: error: *** JOB 793123 ON dr16 CANCELLED AT 2018-03-07T21:48:42 DUE TO TIME LIMIT ***
+srun: Job step aborted: Waiting up to 12 seconds for job step to finish.
+slurmstepd: error: *** STEP 793123.1 ON dr16 CANCELLED AT 2018-03-07T21:48:42 DUE TO TIME LIMIT ***
+srun: got SIGCONT
+srun: forcing job termination
+srun: error: dr16: task 0: Terminated
+srun: Terminating job step 793123.1

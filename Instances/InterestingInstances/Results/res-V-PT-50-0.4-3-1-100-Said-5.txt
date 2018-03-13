@@ -1,0 +1,50 @@
+Reading graph from file
+Choosing Solver: Expected Transplants
+Reading graph from file
+Reading graph from file
+Graph Read
+Model Built
+Model Solved, Branching starting
+Model Built
+Model Solved, Branching starting
+Model Built
+Model Solved, Branching starting
+Model Built
+Model Solved, Branching starting
+Model Built
+Model Solved, Branching starting
+Model Built
+Model Solved, Branching starting
+Model Built
+Model Solved, Branching starting
+Model Built
+Model Solved, Branching starting
+Model Built
+Model Solved, Branching starting
+Model Built
+Model Solved, Branching starting
+Model Built
+Model Solved, Branching starting
+Model Built
+Model Solved, Branching starting
+
+Total time for post ex evaluation : 12927.8
+SCC 0 weight = 10.4027
+SCC 1 weight = 1.008
+SCC 2 weight = 1.008
+SCC 3 weight = 1.64736
+SCC 4 weight = 0.72
+Reading graph from file
+Choosing Solver: Expected Transplants
+Reading graph from file
+Reading graph from file
+Graph Read
+Model Built
+Model Solved, Branching starting
+srun: Job step aborted: Waiting up to 12 seconds for job step to finish.
+slurmstepd: error: *** STEP 793119.1 ON dr09 CANCELLED AT 2018-03-07T18:50:05 DUE TO TIME LIMIT ***
+slurmstepd: error: *** JOB 793119 ON dr09 CANCELLED AT 2018-03-07T18:50:05 DUE TO TIME LIMIT ***
+srun: got SIGCONT
+srun: forcing job termination
+srun: error: dr09: task 0: Terminated
+srun: Terminating job step 793119.1

@@ -1,0 +1,430 @@
+Reading graph from file
+Choosing Solver: Expected Transplants
+Reading graph from file
+Reading graph from file
+Graph Read
+Model Built
+Model Solved, Branching starting
+Model Built
+Model Solved, Branching starting
+Model Built
+Model Solved, Branching starting
+Model Built
+Model Solved, Branching starting
+Model Built
+Model Solved, Branching starting
+Model Built
+Model Solved, Branching starting
+Model Built
+Model Solved, Branching starting
+Model Built
+Model Solved, Branching starting
+Model Built
+Model Solved, Branching starting
+Model Built
+Model Solved, Branching starting
+
+Total time for post ex evaluation : 152.5
+SCC 0 weight = 12.7661
+SCC 1 weight = 6.36461
+SCC 2 weight = 1.536
+Reading graph from file
+Choosing Solver: Expected Transplants
+Reading graph from file
+Reading graph from file
+Graph Read
+Model Built
+Model Solved, Branching starting
+Model Built
+Model Solved, Branching starting
+Model Built
+Model Solved, Branching starting
+
+Solution file : V-PT-50-0.2-3-1-100-Said-3.txt PSE time OLD : 830.39
+SSC 0 weight = 12.7661
+SSC 1 weight = 6.36461
+SSC 2 weight = 1.536
+Reading graph from file
+Choosing Solver: Expected Transplants
+Reading graph from file
+Reading graph from file
+Graph Read
+Model Built
+Model Solved, Branching starting
+Model Built
+Model Solved, Branching starting
+Model Built
+Model Solved, Branching starting
+Model Built
+Model Solved, Branching starting
+Model Built
+Model Solved, Branching starting
+Model Built
+Model Solved, Branching starting
+Model Built
+Model Solved, Branching starting
+Model Built
+Model Solved, Branching starting
+
+Total time for post ex evaluation : 1.88
+SCC 0 weight = 6.76858
+SCC 1 weight = 8.30231
+SCC 2 weight = 2.9184
+SCC 3 weight = 1.28
+SCC 4 weight = 1.536
+Reading graph from file
+Choosing Solver: Expected Transplants
+Reading graph from file
+Reading graph from file
+Graph Read
+Model Built
+Model Solved, Branching starting
+Model Built
+Model Solved, Branching starting
+Model Built
+Model Solved, Branching starting
+Model Built
+Model Solved, Branching starting
+
+Solution file : V-PT-50-0.2-3-1-100-Said-6.txt PSE time OLD : 3962.53
+SSC 0 weight = 15.0709
+SSC 1 weight = 2.9184
+SSC 2 weight = 1.28
+SSC 3 weight = 1.536
+Reading graph from file
+Choosing Solver: Expected Transplants
+Reading graph from file
+Reading graph from file
+Graph Read
+Model Built
+Model Solved, Branching starting
+Model Built
+Model Solved, Branching starting
+Model Built
+Model Solved, Branching starting
+Model Built
+Model Solved, Branching starting
+Model Built
+Model Solved, Branching starting
+Model Built
+Model Solved, Branching starting
+Model Built
+Model Solved, Branching starting
+Model Built
+Model Solved, Branching starting
+Model Built
+Model Solved, Branching starting
+Model Built
+Model Solved, Branching starting
+
+Total time for post ex evaluation : 18165.4
+SCC 0 weight = 18.6603
+SCC 1 weight = 2.14016
+Reading graph from file
+Choosing Solver: Expected Transplants
+Reading graph from file
+Reading graph from file
+Graph Read
+Model Built
+Model Solved, Branching starting
+slurmstepd: error: *** JOB 793116 ON dr03 CANCELLED AT 2018-03-07T20:49:25 DUE TO TIME LIMIT ***
+srun: Job step aborted: Waiting up to 12 seconds for job step to finish.
+slurmstepd: error: *** STEP 793116.1 ON dr03 CANCELLED AT 2018-03-07T20:49:25 DUE TO TIME LIMIT ***
+srun: got SIGCONT
+srun: forcing job termination
+srun: error: dr03: task 0: Terminated
+srun: Terminating job step 793116.1
+Reading graph from file
+Choosing Solver: Expected Transplants
+Reading graph from file
+Reading graph from file
+Graph Read
+Model Built
+Model Solved, Branching starting
+Model Built
+Model Solved, Branching starting
+Model Built
+Model Solved, Branching starting
+Model Built
+Model Solved, Branching starting
+Model Built
+Model Solved, Branching starting
+Model Built
+Model Solved, Branching starting
+Model Built
+Model Solved, Branching starting
+Model Built
+Model Solved, Branching starting
+
+Total time for post ex evaluation : 1080.52
+SCC 0 weight = 15.1428
+SCC 1 weight = 2.304
+Reading graph from file
+Choosing Solver: Expected Transplants
+Reading graph from file
+Reading graph from file
+Graph Read
+Model Built
+Model Solved, Branching starting
+Model Built
+Model Solved, Branching starting
+
+Solution file : V-PT-50-0.2-3-1-Said-4.txt PSE time OLD : 2534.4
+SSC 0 weight = 15.1428
+SSC 1 weight = 2.304
+Reading graph from file
+Choosing Solver: Expected Transplants
+Reading graph from file
+Reading graph from file
+Graph Read
+Model Built
+Model Solved, Branching starting
+srun: Job step aborted: Waiting up to 12 seconds for job step to finish.
+slurmstepd: error: *** STEP 793118.0 ON dr10 CANCELLED AT 2018-03-08T06:48:49 DUE TO TIME LIMIT ***
+slurmstepd: error: *** JOB 793118 ON dr10 CANCELLED AT 2018-03-08T06:48:49 DUE TO TIME LIMIT ***
+srun: got SIGCONT
+srun: forcing job termination
+srun: error: dr10: task 0: Terminated
+srun: Terminating job step 793118.0
+Reading graph from file
+Choosing Solver: Expected Transplants
+Reading graph from file
+Reading graph from file
+Graph Read
+Model Built
+Model Solved, Branching starting
+Model Built
+Model Solved, Branching starting
+Model Built
+Model Solved, Branching starting
+Model Built
+Model Solved, Branching starting
+Model Built
+Model Solved, Branching starting
+Model Built
+Model Solved, Branching starting
+Model Built
+Model Solved, Branching starting
+Model Built
+Model Solved, Branching starting
+Model Built
+Model Solved, Branching starting
+Model Built
+Model Solved, Branching starting
+Model Built
+Model Solved, Branching starting
+Model Built
+Model Solved, Branching starting
+
+Total time for post ex evaluation : 12927.8
+SCC 0 weight = 10.4027
+SCC 1 weight = 1.008
+SCC 2 weight = 1.008
+SCC 3 weight = 1.64736
+SCC 4 weight = 0.72
+Reading graph from file
+Choosing Solver: Expected Transplants
+Reading graph from file
+Reading graph from file
+Graph Read
+Model Built
+Model Solved, Branching starting
+srun: Job step aborted: Waiting up to 12 seconds for job step to finish.
+slurmstepd: error: *** STEP 793119.1 ON dr09 CANCELLED AT 2018-03-07T18:50:05 DUE TO TIME LIMIT ***
+slurmstepd: error: *** JOB 793119 ON dr09 CANCELLED AT 2018-03-07T18:50:05 DUE TO TIME LIMIT ***
+srun: got SIGCONT
+srun: forcing job termination
+srun: error: dr09: task 0: Terminated
+srun: Terminating job step 793119.1
+Reading graph from file
+Choosing Solver: Expected Transplants
+Reading graph from file
+Reading graph from file
+Graph Read
+Vertex switch :26:0  39:1  3:2  48:3  36:4  35:5  33:6  21:7  20:8  41:9  31:10  30:11  37:12  15:13  49:14  22:15  45:16  29:17  34:18  2:19  5:20  13:21  17:22  4:23  32:24  46:25  8:26  9:27  7:28  6:29  1:30  
+Model Built
+Model Solved, Branching starting
+srun: Job step aborted: Waiting up to 12 seconds for job step to finish.
+slurmstepd: error: *** STEP 793120.0 ON dr09 CANCELLED AT 2018-03-07T20:50:25 DUE TO TIME LIMIT ***
+slurmstepd: error: *** JOB 793120 ON dr09 CANCELLED AT 2018-03-07T20:50:25 DUE TO TIME LIMIT ***
+srun: got SIGCONT
+srun: forcing job termination
+srun: error: dr09: task 0: Terminated
+srun: Terminating job step 793120.0
+Reading graph from file
+Choosing Solver: Expected Transplants
+Reading graph from file
+Reading graph from file
+Graph Read
+Model Built
+Model Solved, Branching starting
+Model Built
+Model Solved, Branching starting
+Model Built
+Model Solved, Branching starting
+Model Built
+Model Solved, Branching starting
+Model Built
+Model Solved, Branching starting
+Model Built
+Model Solved, Branching starting
+Model Built
+Model Solved, Branching starting
+Model Built
+Model Solved, Branching starting
+Model Built
+Model Solved, Branching starting
+Model Built
+Model Solved, Branching starting
+Model Built
+Model Solved, Branching starting
+Model Built
+Model Solved, Branching starting
+Model Built
+Model Solved, Branching starting
+
+Total time for post ex evaluation : 2572.29
+SCC 0 weight = 4.49105
+SCC 1 weight = 0.512
+SCC 2 weight = 1.56641
+SCC 3 weight = 0.6912
+SCC 4 weight = 0.512
+Reading graph from file
+Choosing Solver: Expected Transplants
+Reading graph from file
+Reading graph from file
+Graph Read
+Model Built
+Model Solved, Branching starting
+Model Built
+Model Solved, Branching starting
+Model Built
+Model Solved, Branching starting
+Model Built
+Model Solved, Branching starting
+Model Built
+Model Solved, Branching starting
+
+Solution file : V-PT-50-0.6-3-1-100-Said-8.txt PSE time OLD : 5590.82
+SSC 0 weight = 4.49105
+SSC 1 weight = 0.512
+SSC 2 weight = 1.56641
+SSC 3 weight = 0.6912
+SSC 4 weight = 0.512
+Reading graph from file
+Choosing Solver: Expected Transplants
+Reading graph from file
+Reading graph from file
+Graph Read
+Model Built
+Model Solved, Branching starting
+Model Built
+Model Solved, Branching starting
+Model Built
+Model Solved, Branching starting
+Model Built
+Model Solved, Branching starting
+Model Built
+Model Solved, Branching starting
+Model Built
+Model Solved, Branching starting
+
+Total time for post ex evaluation : 3252.45
+SCC 0 weight = 0.16224
+SCC 1 weight = 1.5121
+SCC 2 weight = 0.144
+SCC 3 weight = 0.08
+Reading graph from file
+Choosing Solver: Expected Transplants
+Reading graph from file
+Reading graph from file
+Graph Read
+Model Built
+Model Solved, Branching starting
+Model Built
+Model Solved, Branching starting
+Model Built
+Model Solved, Branching starting
+Model Built
+Model Solved, Branching starting
+
+Solution file : V-PT-50-0.8-3-1-100-Said-2.txt PSE time OLD : 5104.58
+SSC 0 weight = 0.16224
+SSC 1 weight = 1.5121
+SSC 2 weight = 0.144
+SSC 3 weight = 0.08
+Reading graph from file
+Choosing Solver: Expected Transplants
+Reading graph from file
+Reading graph from file
+Graph Read
+Vertex switch :24:0  15:1  29:2  23:3  36:4  49:5  8:6  44:7  41:8  11:9  5:10  14:11  28:12  47:13  45:14  39:15  38:16  12:17  34:18  33:19  43:20  32:21  16:22  20:23  22:24  7:25  37:26  3:27  30:28  17:29  1:30  
+Model Built
+Model Solved, Branching starting
+slurmstepd: error: *** JOB 793123 ON dr16 CANCELLED AT 2018-03-07T21:48:42 DUE TO TIME LIMIT ***
+srun: Job step aborted: Waiting up to 12 seconds for job step to finish.
+slurmstepd: error: *** STEP 793123.1 ON dr16 CANCELLED AT 2018-03-07T21:48:42 DUE TO TIME LIMIT ***
+srun: got SIGCONT
+srun: forcing job termination
+srun: error: dr16: task 0: Terminated
+srun: Terminating job step 793123.1
+Reading graph from file
+Choosing Solver: Expected Transplants
+Reading graph from file
+Reading graph from file
+Graph Read
+Model Built
+Model Solved, Branching starting
+Model Built
+Model Solved, Branching starting
+Model Built
+Model Solved, Branching starting
+Model Built
+Model Solved, Branching starting
+Model Built
+Model Solved, Branching starting
+Model Built
+Model Solved, Branching starting
+Model Built
+Model Solved, Branching starting
+Model Built
+Model Solved, Branching starting
+Model Built
+Model Solved, Branching starting
+Model Built
+Model Solved, Branching starting
+
+Total time for post ex evaluation : 11938.5
+SCC 0 weight = 1.75116
+SCC 1 weight = 0.144
+SCC 2 weight = 0.08
+Reading graph from file
+Choosing Solver: Expected Transplants
+Reading graph from file
+Reading graph from file
+Graph Read
+Model Built
+Model Solved, Branching starting
+Model Built
+Model Solved, Branching starting
+Model Built
+Model Solved, Branching starting
+
+Solution file : V-PT-50-0.8-3-1-500-Said-6.txt PSE time OLD : 18753.3
+SSC 0 weight = 1.75116
+SSC 1 weight = 0.144
+SSC 2 weight = 0.08
+Reading graph from file
+Choosing Solver: Expected Transplants
+Reading graph from file
+Reading graph from file
+Graph Read
+Model Built
+Model Solved, Branching starting
+slurmstepd: error: *** JOB 793125 ON dr16 CANCELLED AT 2018-03-07T20:51:25 DUE TO TIME LIMIT ***
+srun: Job step aborted: Waiting up to 12 seconds for job step to finish.
+slurmstepd: error: *** STEP 793125.0 ON dr16 CANCELLED AT 2018-03-07T20:51:25 DUE TO TIME LIMIT ***
+srun: got SIGCONT
+srun: forcing job termination
+srun: error: dr16: task 0: Terminated
+srun: Terminating job step 793125.0

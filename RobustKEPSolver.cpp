@@ -4,11 +4,12 @@
 #include "stdafx.h"
 #include "Structures.h"
 #include "Functions.h"
+#include <time.h>
 
 int main(int argc, char  * argv[])
 {
 	int error = 0;
-	
+	srand (time(NULL));
 	configuration config = Readconfig(argv[1], &error);
 	directedgraph G = graph_generation(config);
 	if (config.LW == 0)
